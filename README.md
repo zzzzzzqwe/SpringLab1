@@ -70,3 +70,131 @@
     - Добавление и удаление книг из библиотеки
 
 ---
+
+## Описание структуры:
+
+1. **Сущности**:
+- Это классы, которые представляют структуру таблиц в базе данных. Entity-классы описывают поля, типы данных, ограничения и связи между таблицами.
+- С помощью аннотаций JPA (`@Entity`, `@Table`, `@Column`, `@Id`, и т.д.) Java-классы связываются с таблицами базы данных. JPA автоматически генерирует SQL-запросы и управляет сохранением и получением данных.
+
+Пример:
+```java
+@Entity
+public class Author {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    private List<Book> books;
+
+    public Author() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+}
+```
+2. **DTO (Data Transfer Object)**:
+- Это объекты для передачи данных между клиентом и сервером. Они обеспечивают слой абстракции, скрывая внутреннюю структуру сущностей.
+- Они используются для того, чтобы клиент не взаимодействовал напрямую с сущностями. Сервисный слой преобразует entity в DTO и наоборот
+
+Пример:
+```java
+public class AuthorDTO {
+    private Long id;
+    private String name;
+
+    public AuthorDTO() {}
+
+    public AuthorDTO(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+```
+3. Сервисы
+- Классы, которые содержат бизнес-логику приложения. Сервисы обрабатывают данные и управляют транзакциями.
+- Сервисы принимают запросы от контроллеров, взаимодействуют с репозиториями (базой данных), выполняют бизнес-логику и возвращают результаты обратно контроллерам.
+
+Пример:
+```java
+@Service
+public class AuthorService {
+
+    private final AuthorRepository authorRepository;
+
+    public AuthorService(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
+    }
+
+    public List<AuthorDTO> getAll() {
+        return authorRepository.findAll()
+                .stream()
+                .map(author -> new AuthorDTO(author.getId(), author.getName()))
+                .collect(Collectors.toList());
+    }
+
+    public AuthorDTO getById(Long id) {
+        Author author = authorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Author not found"));
+        return new AuthorDTO(author.getId(), author.getName());
+    }
+
+    public AuthorDTO create(AuthorDTO dto) {
+        Author author = new Author();
+        author.setName(dto.getName());
+        Author saved = authorRepository.save(author);
+        return new AuthorDTO(saved.getId(), saved.getName());
+    }
+
+    public AuthorDTO update(Long id, AuthorDTO dto) {
+        Author author = authorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Author not found"));
+        author.setName(dto.getName());
+        Author updated = authorRepository.save(author);
+        return new AuthorDTO(updated.getId(), updated.getName());
+    }
+
+    public void delete(Long id) {
+        authorRepository.deleteById(id);
+    }
+}
+```
