@@ -150,7 +150,7 @@ public class AuthorDTO {
     }
 }
 ```
-3. Сервисы
+3. **Сервисы**
 - Классы, которые содержат бизнес-логику приложения. Сервисы обрабатывают данные и управляют транзакциями.
 - Сервисы принимают запросы от контроллеров, взаимодействуют с репозиториями (базой данных), выполняют бизнес-логику и возвращают результаты обратно контроллерам.
 
@@ -197,4 +197,41 @@ public class AuthorService {
         authorRepository.deleteById(id);
     }
 }
+```
+
+---
+
+## Тестирование
+1. Запускаю приложение через `LibraryApplication` и перехожу на `localhost:8080`
+2. Для отправки HTTP запросов использую vs-code расширение `REST Client`
+
+Проверяю CRUD операции сервиса `AuthorService`:
+1. CREATE:
+```
+POST http://localhost:8080/authors
+Content-Type: application/json
+
+{
+  "name": "Author1 ",
+  "id": "2"
+}
+```
+
+2. READ:
+```
+GET http://localhost:8080/authors
+Accept: application/json
+```
+3. UPDATE:
+```
+PUT http://localhost:8080/authors/2
+Content-Type: application/json
+
+{
+  "name": "Author1234"
+}
+```
+4. DELETE:
+```
+DELETE http://localhost:8080/authors/1
 ```
