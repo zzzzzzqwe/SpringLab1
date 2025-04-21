@@ -205,7 +205,7 @@ public class AuthorService {
 1. Запускаю приложение через `LibraryApplication` и перехожу на `localhost:8080`
 2. Для отправки HTTP запросов использую vs-code расширение `REST Client`
 
-Проверяю CRUD операции сервиса `AuthorService`:
+### Проверяю CRUD операции сервиса `AuthorService`:
 1. `CREATE`:
 ```
 POST http://localhost:8080/authors
@@ -238,7 +238,7 @@ DELETE http://localhost:8080/authors/1
 
 Весь функционал работает. Изменения также можно наблюдать на `http://localhost:8080/authors`
 
-Проверяю CRUD операции сервиса `CategoryService`:
+### Проверяю CRUD операции сервиса `CategoryService`:
 1. `CREATE`:
 ```
 POST http://localhost:8080/categories
@@ -272,7 +272,7 @@ DELETE http://localhost:8080/categories/1
 
 Весь функционал работает. Изменения также можно наблюдать на `http://localhost:8080/categories`
 
-Проверяю CRUD операции сервиса `BookService`:
+### Проверяю CRUD операции сервиса `BookService`:
 1. `CREATE` (для выполнения этого запроса `authorId`,`publisherId`,`categoryIds` уже должны быть в бд. Т.к у меня нет сервиса и контроллера под `Publisher` пришлось их создать):
 ```
 POST http://localhost:8080/books
