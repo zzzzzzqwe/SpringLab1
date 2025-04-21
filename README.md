@@ -271,3 +271,39 @@ DELETE http://localhost:8080/categories/1
 ```
 
 Весь функционал работает. Изменения также можно наблюдать на `http://localhost:8080/categories`
+
+Проверяю CRUD операции сервиса `BookService`:
+1. `CREATE` (для выполнения этого запроса `authorId`,`publisherId`,`categoryIds` уже должны быть в бд. Т.к у меня нет сервиса и контроллера под `Publisher` пришлось их создать):
+```
+POST http://localhost:8080/books
+Content-Type: application/json
+
+{
+  "title": "Test Book",
+  "authorId": 1,
+  "publisherId": 1,
+  "categoryIds": [1, 3]
+}
+```
+2. `READ`:
+```
+GET http://localhost:8080/books
+Accept: application/json
+```
+3. `UPDATE`:
+```
+PUT http://localhost:8080/books/1
+Content-Type: application/json
+
+{
+  "title": "Test put request",
+  "authorId": 1,
+  "publisherId": 1,
+  "categoryIds": [1,2]
+}
+```
+4. `DELETE`:
+```
+DELETE http://localhost:8080/books/1
+```
+есь функционал работает. Изменения также можно наблюдать на `http://localhost:8080/books`
