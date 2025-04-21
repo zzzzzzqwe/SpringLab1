@@ -306,4 +306,4 @@ Content-Type: application/json
 ```
 DELETE http://localhost:8080/books/1
 ```
-есь функционал работает. Изменения также можно наблюдать на `http://localhost:8080/books`
+Весь функционал работает. Изменения также можно наблюдать на `http://localhost:8080/books`
