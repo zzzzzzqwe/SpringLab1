@@ -206,7 +206,7 @@ public class AuthorService {
 2. Для отправки HTTP запросов использую vs-code расширение `REST Client`
 
 Проверяю CRUD операции сервиса `AuthorService`:
-1. CREATE:
+1. `CREATE`:
 ```
 POST http://localhost:8080/authors
 Content-Type: application/json
@@ -217,12 +217,12 @@ Content-Type: application/json
 }
 ```
 
-2. READ:
+2. `READ`:
 ```
 GET http://localhost:8080/authors
 Accept: application/json
 ```
-3. UPDATE:
+3. `UPDATE`:
 ```
 PUT http://localhost:8080/authors/2
 Content-Type: application/json
@@ -231,7 +231,43 @@ Content-Type: application/json
   "name": "Author1234"
 }
 ```
-4. DELETE:
+4. `DELETE`:
 ```
 DELETE http://localhost:8080/authors/1
 ```
+
+Весь функционал работает. Изменения также можно наблюдать на `http://localhost:8080/authors`
+
+Проверяю CRUD операции сервиса `CategoryService`:
+1. `CREATE`:
+```
+POST http://localhost:8080/categories
+Content-Type: application/json
+
+{
+  "name": "Technology"
+}
+```
+
+2. `READ`:
+```
+GET http://localhost:8080/categories
+Accept: application/json
+```
+
+3. `UPDATE`:
+```
+PUT http://localhost:8080/categories/1
+Content-Type: application/json
+
+{
+  "name": "Programming"
+}
+```
+
+4. `DELETE`:
+```
+DELETE http://localhost:8080/categories/1
+```
+
+Весь функционал работает. Изменения также можно наблюдать на `http://localhost:8080/categories`
